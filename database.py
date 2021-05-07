@@ -1,3 +1,4 @@
+import asyncio
 import sqlite3
 import datetime
 import matplotlib.pyplot as plt
@@ -53,7 +54,6 @@ def is_exist(conn, user_id: int):
     return info.fetchone()
 
 
-
 def make_image(user_id: int):
     data = list_weight(user_id=user_id)
     date = []
@@ -65,19 +65,7 @@ def make_image(user_id: int):
     plt.bar(index, weight)
     plt.xticks(index + 0.4, date)
     plt.savefig(f'Images\{user_id}.png')
-    plt.show()
-
 
 
 if __name__ == "__main__":
     init_db()
-    #add_weight(user_id=1234, weight=60.5, datew=datetime.date.today())
-    #add_weight(user_id=1234, weight=65.5, datew=datetime.date.today())
-    #add_weight(user_id=1234, weight=57.5, datew=datetime.date.today())
-    #add_weight(user_id=1234, weight=50, datew=datetime.date.today())
-    #print(list_weight(user_id=1234))
-    #if is_exist(user_id=1234):
-    #    print ('\n1')
-    #else:
-    #    print('\n0')
-    #make_image(user_id=1234)

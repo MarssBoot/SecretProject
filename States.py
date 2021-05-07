@@ -20,6 +20,9 @@ class Form2(StatesGroup):
     g1 = State()
     g2 = State()
     g3 = State()
-    g4 = State()
-    g5 = State()
-    g6 = State()
+
+
+class Form3(StatesGroup):
+    b1 = State()
+    b2 = State()
+    b3 = State()
