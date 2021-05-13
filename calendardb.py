@@ -1,8 +1,6 @@
-import asyncio
 import sqlite3
 import datetime
 import matplotlib.pyplot as plt
-import numpy as np
 
 
 def ensure_connection(func):
@@ -16,7 +14,7 @@ def ensure_connection(func):
 
 
 @ensure_connection
-def init_db(conn, force: bool = False):
+def init_calendar(conn, force: bool = False):
     c = conn.cursor()
 
     if force:
@@ -54,18 +52,30 @@ def is_exist(conn, user_id: int):
     return info.fetchone()
 
 
+@ensure_connection
+def delete(conn, user_id: int):
+    c = conn.cursor()
+    c.execute('DELETE FROM calendar WHERE id = (SELECT MAX(id) FROM calendar WHERE user_id = ?)', (user_id, ))
+    conn.commit()
+
+
+@ensure_connection
+def del_by_date(conn, user_id: int, datew: datetime):
+    c = conn.cursor()
+    c.execute('DELETE FROM calendar WHERE user_id = ? AND datew = ?', (user_id, datew,))
+    conn.commit()
+
+
 def make_image(user_id: int):
     data = list_weight(user_id=user_id)
-    date = []
+    dates = []
     weight = []
     for i in range(0, len(data)):
-        date.append(data[i][0])
+        dates.append(data[i][0])
         weight.append(data[i][1])
-    index = np.arange(len(weight))
-    plt.bar(index, weight)
-    plt.xticks(index + 0.4, date)
+    plt.plot(dates, weight, 'g')
     plt.savefig(f'Images\{user_id}.png')
 
 
 if __name__ == "__main__":
-    init_db()
+    init_calendar()

@@ -1,9 +1,8 @@
-import sqlite3
-from database import ensure_connection
+from calendardb import ensure_connection
 
 
 @ensure_connection
-def init_db2(conn, force: bool = False):
+def init_gif(conn, force: bool = False):
     c = conn.cursor()
 
     if force:
@@ -34,4 +33,4 @@ def list_upr(conn, dayofweek: int, week: int):
 
 
 if __name__ == "__main__":
-    init_db2()
+    init_gif()
